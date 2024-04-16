@@ -22,29 +22,29 @@ public class SpringbootAwsSnsExampleApplication {
 
     String TOPIC_ARN="" ;
 
-	@GetMapping("/addSubscription/{email}")
+	@GetMapping("/suscripcion/{email}")
 	public String addSubscription(@PathVariable String email) {
 		SubscribeRequest request = new SubscribeRequest(TOPIC_ARN, "email", email);
 		snsClient.subscribe(request);
-		return "Subscription request is pending. To confirm the subscription, check your email : " + email;
+		return "La solicitud de suscripción está pendiente. Para confirmar la suscripción, revisa tu correo electrónico: " + email;
 	}
 
-	 @GetMapping("/sendNotification")
+	 @GetMapping("/enviarnotificacion")
 	public String publishMessageToTopic(){
 		 PublishRequest publishRequest=new PublishRequest(TOPIC_ARN,buildEmailBody(),"Notification: Network connectivity issue");
 		 snsClient.publish(publishRequest);
-		 return "Notification send successfully !!";
+		 return "Notificacion enviada correctamente !!";
 	}
 
 
 
 	private String buildEmailBody(){
-		return "Dear Employee ,\n" +
+		return "Estimado Cliente ,\n" +
 				"\n" +
 				"\n" +
-				"Connection down Bangalore."+"\n"+
-				"All the servers in Bangalore Data center are not accessible. We are working on it ! \n" +
-				"Notification will be sent out as soon as the issue is resolved. For any questions regarding this message please feel free to contact IT Service Support team";
+				"Coneccion Fallida."+"\n"+
+				"No se puede acceder a todos los servidores del centro de datos de HIA. ¡Los APU estan trabajando en ello! \n" +
+				"La notificación se enviará tan pronto como se resuelva el problema. Si tiene alguna pregunta sobre este mensaje, no dude en comunicarse con el equipo de soporte de servicios de APU";
 	}
 
     public static void main(String[] args) {
